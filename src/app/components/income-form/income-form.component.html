@@ -1,0 +1,130 @@
+<form action="" [formGroup]="incomeForm">
+  <div class="mb-3">
+    <p class="h1 text-danger">Income</p>
+  </div>
+  <!-- Name input -->
+  <div data-mdb-input-init class="form-outline mb-4">
+    <label class="form-label" for="formAmount">Amount</label>
+    <input
+      type="number"
+      id="formAmount"
+      class="form-control"
+      [(ngModel)]="income.amount"
+      formControlName="amount"
+    />
+    <div
+      class="text-danger"
+      *ngIf="
+        (incomeForm.controls['amount'].touched &&
+          incomeForm.controls['amount'].invalid) ||
+        incomeForm.controls['amount'].dirty
+      "
+    >
+      <span *ngIf="incomeForm.controls['amount'].errors?.['required']"
+        >This is Required</span
+      >
+      <span *ngIf="incomeForm.controls['amount'].errors?.['pattern']"
+        >This Is Positive value</span
+      >
+    </div>
+  </div>
+
+  <!-- Date input -->
+  <div data-mdb-input-init class="form-outline mb-4">
+    <input
+      type="date"
+      id="formDate"
+      class="form-control"
+      [(ngModel)]="income.createDate"
+      formControlName="createDate"
+    />
+    <label class="form-label" for="formDate">Date</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (incomeForm.controls['createDate'].touched &&
+          incomeForm.controls['createDate'].invalid) ||
+        incomeForm.controls['createDate'].dirty
+      "
+    >
+      This is Required
+    </div>
+  </div>
+
+  <div data-mdb-input-init class="form-outline mb-4">
+    <input
+      type="text"
+      id="formSource"
+      class="form-control"
+      [(ngModel)]="income.source"
+      formControlName="source"
+    />
+    <label class="form-label" for="formSource">Source</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (incomeForm.controls['source'].touched &&
+          incomeForm.controls['source'].invalid) ||
+        incomeForm.controls['source'].dirty
+      "
+    >
+      This is Required
+    </div>
+  </div>
+
+  <!-- Message input -->
+  <div data-mdb-input-init class="form-outline mb-4">
+    <textarea
+      class="form-control"
+      id="form4Example3"
+      rows="4"
+      [(ngModel)]="income.description"
+      formControlName="description"
+    ></textarea>
+    <label class="form-label" for="form4Example3">Description</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (incomeForm.controls['discription'].touched &&
+          incomeForm.controls['discription'].invalid) ||
+        incomeForm.controls['discription'].dirty
+      "
+    >
+      This is Required
+    </div>
+  </div>
+
+  <div class="form-group row mb-3">
+    <label for="dropdown" class="col-sm-2 col-form-label">Category</label>
+    <div class="col-sm-6">
+      <select id="dropdown" class="form-control" [(ngModel)]="income.category">
+        <option *ngFor="let option of options" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Checkbox -->
+  <div class="form-check d-flex justify-content-center mb-4">
+    <input
+      class="form-check-input me-2"
+      type="checkbox"
+      value=""
+      id="form4Example4"
+      checked
+    />
+    <label class="form-check-label" for="form4Example4">
+      Send me a copy of this message
+    </label>
+  </div>
+
+  <!-- Submit button -->
+  <button
+    data-mdb-ripple-init
+    type="button"
+    class="btn btn-primary btn-block mb-4"
+  >
+    Add
+  </button>
+</form>

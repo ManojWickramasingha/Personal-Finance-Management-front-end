@@ -37,3 +37,9 @@
 .sidebar-expanded + .content {
   margin-left: 250px;
 }
+
+/* Style for the active link */
+.active {
+  font-weight: bold;
+  color: #007bff;
+}

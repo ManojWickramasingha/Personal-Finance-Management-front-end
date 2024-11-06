@@ -1,28 +1,16 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { TransactionComponent } from './pages/transaction/transaction.component';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { Component } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-sidebar',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    DashboardComponent,
-    TransactionComponent,
-    RouterLink,
-    NgFor,
-    NgIf,
-    NgClass,
-    SidebarComponent,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  imports: [NgClass, NgIf, RouterLink, NgFor, NgClass],
+  templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.css',
 })
-export class AppComponent {
-  title = 'Personal-Finance-Management-front-end';
+export class SidebarComponent {
+  constructor(public router: Router) {}
 
   navbar: any = [
     {
@@ -83,9 +71,13 @@ export class AppComponent {
     {},
   ];
 
-  isCollapsed = false;
+  isCollapsed: any = false;
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
+  }
+
+  isActive(routerLink: string): boolean {
+    return this.router.url === routerLink;
   }
 }
