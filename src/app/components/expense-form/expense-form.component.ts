@@ -1,6 +1,6 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -24,6 +24,13 @@ import {
 })
 export class ExpenseFormComponent {
   expenseForm: FormGroup;
+
+  paymentMethods = [
+    { label: 'Credit Card', value: 'CREDIT_CARD' },
+    { label: 'Cash', value: 'CASH' },
+    { label: 'Bank Transfer', value: 'BANK_TRANSFER' },
+  ];
+
   constructor(private http: HttpClient) {
     this.loadCategory();
     this.expenseForm = new FormGroup({
@@ -35,19 +42,21 @@ export class ExpenseFormComponent {
       description: new FormControl(null, Validators.required),
       category: new FormControl('', Validators.required),
       paymentMethods: new FormControl('', Validators.required),
+      receipt: new FormControl(''),
     });
   }
+
+  url = 'assets/img/receipt.jpg';
   public expense: any = {
-    amount: null,
-    createDate: null,
-    description: null,
-    category: null,
-    paymentMethod: null,
+    amount: 0.0,
+    createDate: '',
+    description: '',
+    category: '',
+    paymentMethod: '',
     recurringOption: 'MONTHLY',
     currency: 'RS',
   };
 
-  selectedFile: File | null = null;
   byteArray: Uint8Array | null = null;
 
   public options: any = [];
@@ -60,24 +69,15 @@ export class ExpenseFormComponent {
       });
   }
 
-  paymentMethods = [
-    { label: 'Credit Card', value: 'CREDIT_CARD' },
-    { label: 'Debit Card', value: 'DEBIT_CARD' },
-    { label: 'Bank Transfer', value: 'BANK_TRANSFER' },
-    { label: 'Cash', value: 'CASH' },
-  ];
+  message: string = '';
 
-  selectedPaymentMethod = this.paymentMethods[0].value;
-
-  onPaymentMethodChange() {
-    console.log('Selected payment method:', this.selectedPaymentMethod);
-  }
-
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input?.files?.length) {
-      this.selectedFile = input.files[0];
-      this.convertFileToByteArray(this.selectedFile);
+  onFileSelected(e: any) {
+    if (e.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      };
     }
   }
 

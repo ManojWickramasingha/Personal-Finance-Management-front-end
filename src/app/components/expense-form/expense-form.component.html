@@ -32,7 +32,7 @@
   <div class="mb-3">
     <label for="date" class="form-label">Date</label>
     <input
-      [(ngModel)]="expense.amount"
+      [(ngModel)]="expense.createDate"
       type="date"
       class="form-control"
       id="date"
@@ -86,6 +86,7 @@
         name="paymentMethod"
         [value]="method.value"
         class="form-check-input"
+        formControlName="paymentMethods"
       />
       <label class="form-check-label">
         {{ method.label }}
@@ -95,11 +96,14 @@
 
   <div class="container mt-5">
     <h2 class="mb-4">Upload Receipt</h2>
+
+    <img [src]="url" class="img-fluid" alt="Wild Landscape" />
     <div class="form-group">
       <input
         type="file"
         class="form-control-file"
         (change)="onFileSelected($event)"
+        formControlName="receipt"
       />
     </div>
     <button class="btn btn-primary mt-3">Upload</button>
@@ -118,4 +122,10 @@
   </button>
 </form>
 
-<h1>{{ expense.payment_method }}</h1>
+<h1>{{ expense.amount }}</h1>
+<br />
+<h1>{{ expense.createDate }}</h1>
+<br />
+<h1>{{ expense.category }}</h1>
+<br />
+<h1>{{ expense.paymentMethod }}</h1>
