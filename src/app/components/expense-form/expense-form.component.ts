@@ -1,5 +1,11 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import Swal from 'sweetalert2';
+
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
@@ -23,7 +29,9 @@ import {
   styleUrl: './expense-form.component.css',
 })
 export class ExpenseFormComponent {
+  selectedFile: File | null = null;
   expenseForm: FormGroup;
+  public receiptId: any = '';
 
   paymentMethods = [
     { label: 'Credit Card', value: 'CREDIT_CARD' },
@@ -36,25 +44,27 @@ export class ExpenseFormComponent {
     this.expenseForm = new FormGroup({
       amount: new FormControl(null, [
         Validators.required,
-        Validators.pattern(/^[1-9]\d*(\.\d+)?$/),
+        Validators.pattern(/^Rs\.\s?[1-9]\d*(\.\d{1,2})?$/),
       ]),
       createDate: new FormControl(null, Validators.required),
-      description: new FormControl(null, Validators.required),
+      description: new FormControl('', [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(200),
+      ]),
       category: new FormControl('', Validators.required),
       paymentMethods: new FormControl('', Validators.required),
       receipt: new FormControl(''),
     });
   }
 
-  url = 'assets/img/receipt.jpg';
   public expense: any = {
-    amount: 0.0,
+    amount: '',
     createDate: '',
     description: '',
     category: '',
     paymentMethod: '',
-    recurringOption: 'MONTHLY',
-    currency: 'RS',
+    receipt: 3,
   };
 
   byteArray: Uint8Array | null = null;
@@ -71,44 +81,57 @@ export class ExpenseFormComponent {
 
   message: string = '';
 
-  onFileSelected(e: any) {
-    if (e.target.files) {
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
-      };
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+      this.http
+        .post('http://localhost:8080/image/fileSystem', formData)
+        .subscribe((res: any) => {
+          alert('sucessfull Upload');
+        });
+      this.loadReceiptId();
     }
   }
 
-  convertFileToByteArray(file: File): void {
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onload = () => {
-      if (reader.result instanceof ArrayBuffer) {
-        this.byteArray = new Uint8Array(reader.result);
-        this.receipt.receiptImage = Array.from(this.byteArray);
-      }
-    };
-    reader.onerror = (error) => console.error('File reading error:', error);
+  loadReceiptId() {
+    this.http
+      .get('http://localhost:8080/expense/receipt_id')
+      .subscribe((res) => {
+        this.receiptId = res;
+      });
   }
-  public receipt: any = {
-    receiptImage: this.byteArray,
-  };
 
   addExpensWithReceipt() {
-    const payload = {
-      expense: this.expense,
-      receipt: this.receipt,
-    };
-
-    this.http.post('http://localhost:8080/expense', payload).subscribe(
-      (res) => {
-        console.log('Upload successful', res);
+    console.log(this.expense);
+    this.http.post('http://localhost:8080/expense', this.expense).subscribe(
+      (data) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your work has been saved',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       },
       (error) => {
-        console.error('Error occurred:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: error.message || 'Something went wrong!',
+          icon: 'error',
+          confirmButtonText: 'Retry',
+        });
       }
     );
+    this.clearInput();
+  }
+  clearInput() {
+    this.expense.amount = '';
+    this.expense.createDate = '';
+    this.expense.description = '';
+    this.expense.category = '';
+    this.expense.paymentMethod = '';
+    this.expense.receipt = '';
   }
 }

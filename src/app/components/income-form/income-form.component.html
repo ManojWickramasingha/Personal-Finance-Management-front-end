@@ -6,7 +6,7 @@
   <div data-mdb-input-init class="form-outline mb-4">
     <label class="form-label" for="formAmount">Amount</label>
     <input
-      type="number"
+      type="text"
       id="formAmount"
       class="form-control"
       [(ngModel)]="income.amount"
@@ -23,8 +23,9 @@
       <span *ngIf="incomeForm.controls['amount'].errors?.['required']"
         >This is Required</span
       >
-      <span *ngIf="incomeForm.controls['amount'].errors?.['pattern']"
-        >This Is Positive value</span
+      <span *ngIf="incomeForm.controls['amount'].errors?.['pattern']">
+        Please enter a valid amount starting with "Rs." (e.g., Rs.1000 or
+        Rs.1000.50)</span
       >
     </div>
   </div>
@@ -41,11 +42,7 @@
     <label class="form-label" for="formDate">Date</label>
     <div
       class="text-danger"
-      *ngIf="
-        (incomeForm.controls['createDate'].touched &&
-          incomeForm.controls['createDate'].invalid) ||
-        incomeForm.controls['createDate'].dirty
-      "
+      *ngIf="incomeForm.get('createDate')?.hasError('required')"
     >
       This is Required
     </div>
@@ -62,11 +59,7 @@
     <label class="form-label" for="formSource">Source</label>
     <div
       class="text-danger"
-      *ngIf="
-        (incomeForm.controls['source'].touched &&
-          incomeForm.controls['source'].invalid) ||
-        incomeForm.controls['source'].dirty
-      "
+      *ngIf="incomeForm.get('source')?.hasError('required')"
     >
       This is Required
     </div>
@@ -79,25 +72,29 @@
       id="form4Example3"
       rows="4"
       [(ngModel)]="income.description"
-      formControlName="description"
+      formControlName="discription"
     ></textarea>
     <label class="form-label" for="form4Example3">Description</label>
-    <div
-      class="text-danger"
-      *ngIf="
-        (incomeForm.controls['discription'].touched &&
-          incomeForm.controls['discription'].invalid) ||
-        incomeForm.controls['discription'].dirty
-      "
-    >
-      This is Required
+  </div>
+  <div>
+    <div *ngIf="incomeForm.hasError('required')">Description is required.</div>
+    <div *ngIf="incomeForm.hasError('minlength')">
+      Description must be at least 10 characters.
+    </div>
+    <div *ngIf="incomeForm.hasError('maxlength')">
+      Description cannot exceed 200 characters.
     </div>
   </div>
 
   <div class="form-group row mb-3">
     <label for="dropdown" class="col-sm-2 col-form-label">Category</label>
     <div class="col-sm-6">
-      <select id="dropdown" class="form-control" [(ngModel)]="income.category">
+      <select
+        id="dropdown"
+        class="form-control"
+        [(ngModel)]="income.category"
+        formControlName="category"
+      >
         <option *ngFor="let option of options" [value]="option.value">
           {{ option.label }}
         </option>
@@ -124,7 +121,18 @@
     data-mdb-ripple-init
     type="button"
     class="btn btn-primary btn-block mb-4"
+    (click)="addIncome()"
   >
     Add
   </button>
 </form>
+
+<h1>{{ income.amount }}</h1>
+<br />
+<h1>{{ income.createDate }}</h1>
+<br />
+<h1>{{ income.source }}</h1>
+<br />
+<h1>{{ income.description }}</h1>
+<br />
+<h1>{{ income.category }}</h1>

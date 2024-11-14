@@ -5,7 +5,7 @@ import { CategoryFormComponent } from '../../components/category-form/category-f
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CategoryTableComponent, CategoryFormComponent],
+  imports: [CategoryFormComponent, CategoryTableComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css',
 })

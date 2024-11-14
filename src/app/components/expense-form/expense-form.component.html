@@ -6,7 +6,7 @@
     <label for="amount" class="form-label">Amount</label>
     <input
       [(ngModel)]="expense.amount"
-      type="number"
+      type="text"
       class="form-control"
       id="amount"
       aria-describedby="amountHelp"
@@ -23,8 +23,9 @@
       <span *ngIf="expenseForm.controls['amount'].errors?.['required']"
         >This is Required</span
       >
-      <span *ngIf="expenseForm.controls['amount'].errors?.['pattern']"
-        >This Is Positive value</span
+      <span *ngIf="expenseForm.controls['amount'].errors?.['pattern']">
+        Please enter a valid amount starting with "Rs." (e.g., Rs.1000 or
+        Rs.1000.50)</span
       >
     </div>
   </div>
@@ -41,11 +42,7 @@
     />
     <div
       class="text-danger"
-      *ngIf="
-        (expenseForm.controls['createDate'].touched &&
-          expenseForm.controls['createDate'].invalid) ||
-        expenseForm.controls['createDate'].dirty
-      "
+      *ngIf="expenseForm.get('createDate')?.hasError('required')"
     >
       This is Required
     </div>
@@ -67,11 +64,7 @@
     </div>
     <div
       class="text-danger"
-      *ngIf="
-        (expenseForm.controls['category'].touched &&
-          expenseForm.controls['category'].invalid) ||
-        expenseForm.controls['category'].dirty
-      "
+      *ngIf="expenseForm.get('category')?.hasError('required')"
     >
       This is Rrquired
     </div>
@@ -94,33 +87,55 @@
     </div>
   </div>
 
-  <div class="container mt-5">
-    <h2 class="mb-4">Upload Receipt</h2>
-
-    <img [src]="url" class="img-fluid" alt="Wild Landscape" />
-    <div class="form-group">
-      <input
-        type="file"
-        class="form-control-file"
-        (change)="onFileSelected($event)"
-        formControlName="receipt"
-      />
+  <textarea
+    id="description"
+    class="form-control"
+    formControlName="description"
+    placeholder="Enter description here"
+    [(ngModel)]="expense.description"
+  ></textarea>
+  <div>
+    <div *ngIf="expenseForm.hasError('required')">Description is required.</div>
+    <div *ngIf="expenseForm.hasError('minlength')">
+      Description must be at least 10 characters.
     </div>
-    <button class="btn btn-primary mt-3">Upload</button>
+    <div *ngIf="expenseForm.hasError('maxlength')">
+      Description cannot exceed 200 characters.
+    </div>
+  </div>
+
+  <div class="form-outline mt-3" data-mdb-input-init>
+    <input
+      type="number"
+      id="form12"
+      class="form-control"
+      [value]="receiptId"
+      formControlName="receipt"
+      [(ngModel)]="expense.receipt"
+    />
+    <label class="form-label" for="form12">Receipt Id</label>
   </div>
 
   <div class="mb-3 form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1" />
     <label class="form-check-label" for="exampleCheck1">Check me out</label>
   </div>
+
   <button
     type="submit"
-    class="btn btn-primary"
+    class="btn btn-primary mt-3"
     (click)="addExpensWithReceipt()"
   >
     Add
   </button>
 </form>
+
+<div class="container mt-5">
+  <h2 class="mb-4">Upload Receipt</h2>
+  <div class="form-group">
+    <input type="file" (change)="onFileSelected($event)" />
+  </div>
+</div>
 
 <h1>{{ expense.amount }}</h1>
 <br />
@@ -129,3 +144,7 @@
 <h1>{{ expense.category }}</h1>
 <br />
 <h1>{{ expense.paymentMethod }}</h1>
+<br />
+<h1>{{ expense.description }}</h1>
+<br />
+<h1>{{ expense.receipt }}</h1>

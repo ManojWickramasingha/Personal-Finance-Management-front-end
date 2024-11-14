@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
@@ -10,21 +11,21 @@ Chart.register(...registerables);
   styleUrl: './piechart.component.css',
 })
 export class PiechartComponent implements OnInit {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.RenderChart();
+    this.getCateByAmountTotal();
   }
 
-  RenderChart() {
+  RenderChart(categories: string[], amounts: number[]) {
     new Chart('piechart', {
       type: 'pie',
       data: {
-        labels: ['Travel', 'Salary', 'Current Bill'],
+        labels: categories,
         datasets: [
           {
-            label: 'Category',
-            data: [300, 50, 100],
+            label: 'Expense',
+            data: amounts,
             backgroundColor: [
               'rgb(255, 99, 132)',
               'rgb(54, 162, 235)',
@@ -42,5 +43,20 @@ export class PiechartComponent implements OnInit {
         },
       },
     });
+  }
+
+  getCateByAmountTotal() {
+    this.http
+      .get<{ [key: string]: number }>(
+        'http://localhost:8080/analysis/categoryTotal'
+      )
+      .subscribe((data) => {
+        const categories = Object.keys(data);
+        const amounts = Object.values(data);
+
+        console.log('Categories:', categories);
+        console.log('Amounts:', amounts);
+        this.RenderChart(categories, amounts);
+      });
   }
 }

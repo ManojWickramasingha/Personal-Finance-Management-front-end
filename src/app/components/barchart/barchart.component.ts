@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
@@ -9,28 +10,28 @@ Chart.register(...registerables);
   styleUrl: './barchart.component.css',
 })
 export class BarchartComponent implements OnInit {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.RenderChart();
+    this.getWeeklySummary();
   }
 
-  RenderChart() {
+  RenderChart(expenses: number[], incomes: number[]) {
     const myChart = new Chart('barchart', {
       type: 'line',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         datasets: [
           {
             label: 'Expense',
-            data: [65, 59, 80, 81, 56, 55, 40],
+            data: expenses,
             fill: false,
             borderColor: 'rgb(178, 38, 238)',
             tension: 0.1,
           },
           {
             label: 'Income',
-            data: [50, 45, 30, 48, 90, 10, 20],
+            data: incomes,
             fill: false,
             borderColor: 'rgb(65, 238, 38)',
             tension: 0.1,
@@ -45,5 +46,16 @@ export class BarchartComponent implements OnInit {
         },
       },
     });
+  }
+
+  getWeeklySummary() {
+    return this.http
+      .get<{ expenses: number[]; incomes: number[] }>(
+        'http://localhost:8080/analysis/weekly-summary'
+      )
+      .subscribe((data) => {
+        console.log(data.expenses);
+        this.RenderChart(data.expenses, data.incomes);
+      });
   }
 }

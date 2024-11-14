@@ -1,27 +1,67 @@
 <div class="row">
-  <div class="col-sm-3">
-    <div data-mdb-input-init class="form-outline">
-      <input type="text" id="form10Example1" class="form-control" />
-      <label class="form-label" for="form10Example1">Category</label>
-    </div>
-    <app-buttons></app-buttons>
+  <div class="col-sm-6">
+    <form class="row row-cols-lg-auto g-3 align-items-center">
+      <div class="col-12">
+        <label class="visually-hidden" for="inlineFormInputGroupUsername"
+          >name</label
+        >
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="inlineFormInputGroupUsername"
+            placeholder="category name"
+          />
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label class="visually-hidden" for="inlineFormSelectPref">Type</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inlineFormInputGroupUsername"
+          placeholder="type"
+        />
+      </div>
+
+      <div class="col-12">
+        <label class="visually-hidden" for="inlineFormSelectPref"
+          >Description</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="inlineFormInputGroupUsername"
+          placeholder="description"
+        />
+      </div>
+
+      <div class="col-6">
+        <div class="form-check">
+          <input
+            type="file"
+            class="form-control"
+            id="inlineFormInputGroupUsername"
+            placeholder="icon"
+          />
+        </div>
+      </div>
+
+      <div class="col-12">
+        <button data-mdb-ripple-init type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </div>
+    </form>
   </div>
-  <div class="col-sm">
-    <div data-mdb-input-init class="form-outline">
-      <input type="text" id="form10Example2" class="form-control" />
-      <label class="form-label" for="form10Example2">Type</label>
-    </div>
-  </div>
-  <div class="col-sm">
-    <div data-mdb-input-init class="form-outline">
-      <input type="text" id="form10Example3" class="form-control" />
-      <label class="form-label" for="form10Example3">Icon</label>
-    </div>
-  </div>
-  <div class="col-sm">
-    <div data-mdb-input-init class="form-outline">
-      <input type="text" id="form10Example3" class="form-control" />
-      <label class="form-label" for="form10Example3">Name</label>
-    </div>
+
+  <div class="col-sm-6">
+    <button type="button" class="btn btn-primary" data-mdb-ripple-init>
+      Active
+    </button>
+    <button type="button" class="btn btn-danger ms-5" data-mdb-ripple-init>
+      Cancel
+    </button>
   </div>
 </div>

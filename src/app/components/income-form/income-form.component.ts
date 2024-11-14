@@ -1,4 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
   FormControl,
@@ -7,6 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-income-form',
@@ -18,18 +20,19 @@ import {
 export class IncomeFormComponent {
   incomeForm: FormGroup;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.incomeForm = new FormGroup({
       amount: new FormControl(null, [
         Validators.required,
-        Validators.pattern(/^[1-9]\d*(\.\d+)?$/),
+        Validators.pattern(/^Rs\.\s?[1-9]\d*(\.\d{1,2})?$/),
       ]),
       createDate: new FormControl(null, [Validators.required]),
       source: new FormControl(null, [
         Validators.required,
         Validators.minLength(4),
       ]),
-      discription: new FormControl(null),
+      discription: new FormControl(null, Validators.required),
+      category: new FormControl('', Validators.required),
     });
   }
 
@@ -50,4 +53,25 @@ export class IncomeFormComponent {
       value: 'boarding',
     },
   ];
+
+  addIncome() {
+    this.http.post('http://localhost:8080/income', this.income).subscribe(
+      (res) => {
+        Swal.fire({
+          title: 'Success!',
+          text: JSON.stringify(Response),
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+      },
+      (error) => {
+        Swal.fire({
+          title: 'Error!',
+          text: error.message || 'Something went wrong!',
+          icon: 'error',
+          confirmButtonText: 'Retry',
+        });
+      }
+    );
+  }
 }
