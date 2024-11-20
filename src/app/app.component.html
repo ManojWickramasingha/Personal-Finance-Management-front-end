@@ -1,12 +1,17 @@
-<div class="row">
+<div *ngIf="isLoggedIn(); else loginTemplate" class="row">
+  <!-- Sidebar for authenticated users -->
   <div class="col-sm-3">
-    <!-- side bar -->
-
     <app-sidebar></app-sidebar>
-
-    <!-- side bar -->
   </div>
+  <!-- Main content -->
   <div class="col-sm-9">
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<!-- Login template -->
+<ng-template #loginTemplate>
+  <div class="login-container">
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>

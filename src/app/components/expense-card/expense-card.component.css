@@ -1,0 +1,70 @@
+.income-card {
+  background: linear-gradient(135deg, #e9f7ef, #ffffff);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.income-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.income-card h3 {
+  font-size: 1.5rem;
+  color: #28a745;
+}
+
+.income-card h5 {
+  font-size: 2rem;
+  color: #007bff;
+}
+
+.progress-bar {
+  border-radius: 4px;
+}
+
+.expense-form .form-outline .form-control {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.expense-form .form-outline .form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.expense-form .form-outline label {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.expense-form .form-outline .form-label {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  background-color: #fff;
+  padding: 0 5px;
+  transform: translateY(-50%);
+  transition: font-size 0.3s, color 0.3s;
+}
+
+.expense-form .form-outline .form-control::placeholder {
+  color: transparent;
+}
+
+.expense-form .form-outline .form-control:focus + .form-label {
+  color: #007bff;
+  font-size: 0.85rem;
+}
+
+.expense-form button.btn {
+  border-radius: 8px;
+  padding: 0.6rem 1.5rem;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.expense-form button.btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}

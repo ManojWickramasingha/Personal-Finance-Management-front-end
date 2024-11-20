@@ -1,0 +1,99 @@
+<div class="row m-5 mt-3">
+  <div class="col-sm-12">
+    <div class="card income-card shadow-sm border-0">
+      <div class="card-body text-center">
+        <h3 class="card-title text-success">Income</h3>
+        <h5 class="card-text display-6 fw-bold text-primary">
+          Rs.<span>{{ incomeTotal }}</span>
+        </h5>
+        <!-- Optional: Progress bar for income goal (if applicable) -->
+        <div class="progress mt-3" style="height: 8px">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+            role="progressbar"
+            [style.width.%]="incomeProgress"
+            [attr.aria-valuenow]="incomeProgress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+        <p class="mt-2 text-muted" *ngIf="incomeProgress">
+          Progress: {{ incomeProgress }}%
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <form style="width: 26rem" class="mt-5 expense-form" [formGroup]="incomeForm">
+    <div class="form-outline mb-4">
+      <input
+        type="number"
+        id="form4Example1"
+        class="form-control"
+        placeholder=" "
+        formControlName="total"
+        [(ngModel)]="goalIncome.total"
+      />
+      <label class="form-label" for="form4Example1">Expense Goal</label>
+      <div
+        class="text-danger"
+        *ngIf="
+          (incomeForm.controls['total'].touched &&
+            incomeForm.controls['total'].invalid) ||
+          incomeForm.controls['total'].dirty
+        "
+      >
+        <span *ngIf="incomeForm.controls['total'].errors?.['required']">
+          Required Feild
+        </span>
+      </div>
+    </div>
+
+    <!-- Expense Goal Input -->
+    <div class="form-outline mb-4">
+      <input
+        type="number"
+        id="form4Example1"
+        class="form-control"
+        placeholder=" "
+        formControlName="goal"
+        [(ngModel)]="goalIncome.goal"
+      />
+      <label class="form-label" for="form4Example1">Expense Goal</label>
+      <div
+        class="text-danger"
+        *ngIf="
+          (incomeForm.controls['goal'].touched &&
+            incomeForm.controls['goal'].invalid) ||
+          incomeForm.controls['goal'].dirty
+        "
+      >
+        <span *ngIf="incomeForm.controls['goal'].errors?.['required']">
+          Required Feild
+        </span>
+      </div>
+    </div>
+
+    <!-- Create Date Input -->
+    <div class="form-outline mb-4">
+      <input
+        type="date"
+        id="form4Example2"
+        class="form-control"
+        placeholder=" "
+        formControlName="date"
+        [(ngModel)]="goalIncome.updateDate"
+      />
+      <label class="form-label" for="form4Example2">Create Date</label>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="button"
+      class="btn btn-primary btn-block mb-4"
+      (click)="updateIncomeGoal()"
+    >
+      Update
+    </button>
+  </form>
+</div>

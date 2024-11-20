@@ -14,7 +14,7 @@ export class SidebarComponent {
 
   navbar: any = [
     {
-      routerLink: '',
+      routerLink: '/home',
       label: 'Home',
       icon: 'bi me-2 bi-house fs-3',
     },
@@ -29,7 +29,7 @@ export class SidebarComponent {
       icon: 'bi me-2 bi-cash-stack fs-3',
     },
     {
-      routerLink: '/category',
+      routerLink: '/categories',
       label: 'Categories',
       icon: 'bi me-2 bi-tags fs-3',
     },

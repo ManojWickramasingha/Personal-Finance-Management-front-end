@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-sm-6">
-    <form class="row row-cols-lg-auto g-3 align-items-center">
+    <form
+      class="row row-cols-lg-auto g-3 align-items-center"
+      [formGroup]="categoryForm"
+    >
       <div class="col-12">
         <label class="visually-hidden" for="inlineFormInputGroupUsername"
           >name</label
@@ -11,7 +14,22 @@
             class="form-control"
             id="inlineFormInputGroupUsername"
             placeholder="category name"
+            formControlName="name"
+            [(ngModel)]="category.name"
           />
+        </div>
+
+        <div
+          class="text-danger"
+          *ngIf="
+            (categoryForm.controls['name'].touched &&
+              categoryForm.controls['name'].invalid) ||
+            categoryForm.controls['name'].dirty
+          "
+        >
+          <span *ngIf="categoryForm.controls['name'].errors?.['required']">
+            *Required Feild
+          </span>
         </div>
       </div>
 
@@ -22,7 +40,26 @@
           class="form-control"
           id="inlineFormInputGroupUsername"
           placeholder="type"
+          formControlName="type"
+          [(ngModel)]="category.type"
         />
+
+        <div
+          class="text-danger"
+          *ngIf="
+            (categoryForm.controls['type'].touched &&
+              categoryForm.controls['type'].invalid) ||
+            categoryForm.controls['type'].dirty
+          "
+        >
+          <span *ngIf="categoryForm.controls['type'].errors?.['required']">
+            *Required Feild
+          </span>
+
+          <small *ngIf="categoryForm.get('type')?.errors?.['pattern']">
+            Category must be "Expense" or "Income".
+          </small>
+        </div>
       </div>
 
       <div class="col-12">
@@ -34,7 +71,24 @@
           class="form-control"
           id="inlineFormInputGroupUsername"
           placeholder="description"
+          formControlName="description"
+          [(ngModel)]="category.description"
         />
+
+        <div
+          class="text-danger"
+          *ngIf="
+            (categoryForm.controls['description'].touched &&
+              categoryForm.controls['description'].invalid) ||
+            categoryForm.controls['description'].dirty
+          "
+        >
+          <span
+            *ngIf="categoryForm.controls['description'].errors?.['required']"
+          >
+            *Required Feild
+          </span>
+        </div>
       </div>
 
       <div class="col-6">
@@ -44,12 +98,19 @@
             class="form-control"
             id="inlineFormInputGroupUsername"
             placeholder="icon"
+            formControlName="icon"
+            [(ngModel)]="category.icon"
           />
         </div>
       </div>
 
       <div class="col-12">
-        <button data-mdb-ripple-init type="submit" class="btn btn-primary">
+        <button
+          data-mdb-ripple-init
+          type="submit"
+          class="btn btn-primary"
+          (click)="addCategory()"
+        >
           Submit
         </button>
       </div>

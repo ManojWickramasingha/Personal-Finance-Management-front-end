@@ -2,56 +2,182 @@
   <table class="table table-hover table-bordered table-striped align-middle">
     <thead class="table-dark">
       <tr>
-        <th>Category</th>
+        <th>Id</th>
+        <th>name</th>
         <th>Type</th>
         <th>Action</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let record of records">
+        <td>{{ record.id }}</td>
         <td>
           <div class="d-flex align-items-center">
             <i class="fas fa-dollar-sign me-2 text-success"></i>
-            <span>Income</span>
+            <span>{{ record.name }}</span>
           </div>
         </td>
-        <td>Salary</td>
+        <td>{{ record.type }}</td>
         <td>
           <span class="badge bg-success rounded-pill">Active</span>
         </td>
         <td>
           <button
             type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            data-bs-whatever="@mdo"
             class="btn btn-outline-primary btn-sm rounded-pill"
+            (click)="selectedUpdateCategory(record)"
           >
             Edit
           </button>
         </td>
       </tr>
-      <tr>
-        <td>
-          <div class="d-flex align-items-center">
-            <i class="fas fa-credit-card me-2 text-danger"></i>
-            <span>Expense</span>
-          </div>
-        </td>
-        <td>Consulting Fee</td>
-        <td>
-          <span class="badge bg-warning rounded-pill">Pending</span>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-outline-primary btn-sm rounded-pill"
-          >
-            Edit
-          </button>
-        </td>
-      </tr>
+
       <!-- Additional rows as needed -->
     </tbody>
   </table>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="categoryForm">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">ID</label>
+            <input
+              aria-disabled="false"
+              type="text"
+              class="form-control disabled"
+              id="recipient-name"
+              formControlName="id"
+              [(ngModel)]="selectCategory.id"
+              [disabled]="true"
+            />
+
+            <div
+              class="text-danger"
+              *ngIf="
+                (categoryForm.controls['id'].touched &&
+                  categoryForm.controls['id'].invalid) ||
+                categoryForm.controls['id'].dirty
+              "
+            >
+              <span *ngIf="categoryForm.controls['id'].errors?.['required']">
+                *Required Feild
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="recipient-name"
+              formControlName="name"
+              [(ngModel)]="selectCategory.name"
+            />
+
+            <div
+              class="text-danger"
+              *ngIf="
+                (categoryForm.controls['name'].touched &&
+                  categoryForm.controls['name'].invalid) ||
+                categoryForm.controls['name'].dirty
+              "
+            >
+              <span *ngIf="categoryForm.controls['name'].errors?.['required']">
+                *Required Feild
+              </span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label">Type</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="type"
+              [(ngModel)]="selectCategory.type"
+            />
+            <div
+              class="text-danger"
+              *ngIf="
+                (categoryForm.controls['type'].touched &&
+                  categoryForm.controls['type'].invalid) ||
+                categoryForm.controls['type'].dirty
+              "
+            >
+              <span *ngIf="categoryForm.controls['type'].errors?.['required']">
+                *Required Feild
+              </span>
+
+              <small *ngIf="categoryForm.get('type')?.errors?.['pattern']">
+                Category must be "Expense" or "Income".
+              </small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label"
+              >Description</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="recipient-name"
+              formControlName="description"
+              [(ngModel)]="selectCategory.description"
+            />
+
+            <div
+              class="text-danger"
+              *ngIf="
+                (categoryForm.controls['description'].touched &&
+                  categoryForm.controls['description'].invalid) ||
+                categoryForm.controls['description'].dirty
+              "
+            >
+              <span
+                *ngIf="categoryForm.controls['description'].errors?.['required']"
+              >
+                *Required Feild
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="updateCategory()"
+        >
+          Update
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Font Awesome for icons -->

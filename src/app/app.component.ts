@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TransactionComponent } from './pages/transaction/transaction.component';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AuthService } from './pages/login/authService';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,12 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 })
 export class AppComponent {
   title = 'Personal-Finance-Management-front-end';
+
+  constructor(private authService: AuthService) {}
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
 
   navbar: any = [
     {
