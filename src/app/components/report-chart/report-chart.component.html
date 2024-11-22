@@ -1,0 +1,31 @@
+<div class="chart-container mt-4">
+  <canvas id="chart" height="200"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById("chart").getContext("2d");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Marketing", "Operations", "Development"],
+      datasets: [
+        {
+          label: "Expenses",
+          data: [5000, 7000, 3000],
+          backgroundColor: ["#28a745", "#17a2b8", "#ffc107"],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+      },
+      scales: {
+        x: { title: { display: true, text: "Categories" } },
+        y: { title: { display: true, text: "Amount ($)" } },
+      },
+    },
+  });
+</script>

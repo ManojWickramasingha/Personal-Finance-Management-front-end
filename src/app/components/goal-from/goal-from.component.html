@@ -1,0 +1,119 @@
+<form class="modern-form" [formGroup]="goalForm">
+  <h1 class="text-success fw-bold display-4 mb-4 shadow-text">Expense Goal</h1>
+  <!-- Name input -->
+  <div class="form-group">
+    <input
+      type="number"
+      id="name"
+      class="form-control"
+      placeholder=" "
+      formControlName="total"
+      [(ngModel)]="goalObj.total"
+    />
+    <label for="name" class="form-label">Total</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (goalForm.controls['total'].touched &&
+          goalForm.controls['total'].invalid) ||
+        goalForm.controls['total'].dirty
+      "
+    >
+      <small *ngIf="goalForm.controls['total'].errors?.['required']"
+        >Required Field</small
+      >
+      <small *ngIf="goalForm.controls['total'].errors?.['pattern']"
+        >Only Positive value</small
+      >
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input
+      type="text"
+      id="name"
+      class="form-control"
+      placeholder=" "
+      formControlName="goal"
+      [(ngModel)]="goalObj.goal"
+    />
+    <label for="name" class="form-label">Amount</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (goalForm.controls['goal'].touched &&
+          goalForm.controls['goal'].invalid) ||
+        goalForm.controls['goal'].dirty
+      "
+    >
+      <small *ngIf="goalForm.controls['goal'].errors?.['required']"
+        >Required Field</small
+      >
+      <small *ngIf="goalForm.controls['goal'].errors?.['pattern']"
+        >Only Positive value</small
+      >
+    </div>
+  </div>
+
+  <!-- Goal dropdown -->
+  <div class="form-group">
+    <select
+      id="goal"
+      class="form-control"
+      formControlName="goalType"
+      [(ngModel)]="goalObj.goalType"
+    >
+      <option value="" disabled selected>Select a goal</option>
+      <option value="save money">Save Money</option>
+      <option value="buy a car">Buy a Car</option>
+      <option value="travel">Travel</option>
+      <option value="others">Other</option>
+    </select>
+    <label for="goal" class="form-label">Goal</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (goalForm.controls['goalType'].touched &&
+          goalForm.controls['goalType'].invalid) ||
+        goalForm.controls['goalType'].dirty
+      "
+    >
+      <small *ngIf="goalForm.controls['goalType'].errors?.['required']"
+        >Required Field</small
+      >
+    </div>
+  </div>
+
+  <!-- Create Date -->
+  <div class="form-group">
+    <input
+      type="date"
+      id="createDate"
+      class="form-control"
+      placeholder=" "
+      formControlName="createDate"
+      [(ngModel)]="goalObj.createDate"
+    />
+    <label for="createDate" class="form-label">Create Date</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (goalForm.controls['createDate'].touched &&
+          goalForm.controls['createDate'].invalid) ||
+        goalForm.controls['createDate'].dirty
+      "
+    >
+      <small *ngIf="goalForm.controls['createDate'].errors?.['required']"
+        >Required Field</small
+      >
+      <small *ngIf="goalForm.controls['createDate'].errors?.['futureDate']">
+        Not A Futhure date Invalide
+      </small>
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-primary btn-block" (click)="addGoal()">
+    Send
+  </button>
+</form>

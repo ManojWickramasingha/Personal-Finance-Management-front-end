@@ -1,1 +1,34 @@
-<p>report works!</p>
+<div class="container mt-4">
+  <!-- Header -->
+  <app-report-header></app-report-header>
+
+  <!-- Metrics -->
+  <div class="row mt-4 text-center">
+    <!-- Add Metrics Component Code -->
+    <app-report-matric></app-report-matric>
+  </div>
+
+  <!-- Chart -->
+  <div class="chart-container mt-4">
+    <app-line-chart-monthly></app-line-chart-monthly>
+  </div>
+
+  <!-- Insights -->
+  <div class="mt-4">
+    <!-- Add Insights Component Code -->
+    <app-report-insignt></app-report-insignt>
+  </div>
+
+  <!-- chart -->
+  <div
+    class="d-flex flex-column justify-content-center align-items-center mt-4 col-sm-12 shadow-lg p-4 bg-white rounded"
+    style="min-height: 300px"
+  >
+    <h5 class="text-primary mb-3">Monthly Expense Breakdown</h5>
+
+    <app-piechart-monthly></app-piechart-monthly>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer mt-3"></div>
+</div>

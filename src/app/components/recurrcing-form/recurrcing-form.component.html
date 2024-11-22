@@ -1,0 +1,132 @@
+<form style="width: 22rem" [formGroup]="recurrcingForm">
+  <!-- Name input -->
+  <div data-mdb-input-init class="form-outline mb-4">
+    <input
+      type="date"
+      id="form5Example1"
+      class="form-control"
+      formControlName="start_date"
+      [(ngModel)]="recurr.startDate"
+    />
+    <div
+      class="text-danger"
+      *ngIf="
+        (recurrcingForm.controls['start_date'].touched &&
+          recurrcingForm.controls['start_date'].invalid) ||
+        recurrcingForm.controls['start_date'].dirty
+      "
+    >
+      <small *ngIf="recurrcingForm.controls['start_date'].errors?.['required']"
+        >Tis is Required</small
+      >
+    </div>
+    <label class="form-label" for="form5Example1">Start</label>
+  </div>
+
+  <!-- End Date input -->
+  <div data-mdb-input-init class="form-outline mb-4">
+    <input
+      type="date"
+      id="form5Example2"
+      class="form-control"
+      formControlName="end_date"
+      [(ngModel)]="recurr.endDate"
+    />
+    <label class="form-label" for="form5Example2">End</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (recurrcingForm.controls['end_date'].touched &&
+          recurrcingForm.controls['end_date'].invalid) ||
+        recurrcingForm.controls['end_date'].dirty
+      "
+    >
+      <small *ngIf="recurrcingForm.controls['end_date'].errors?.['required']"
+        >This is Required</small
+      >
+    </div>
+  </div>
+
+  <div data-mdb-input-init class="form-outline mb-4">
+    <input
+      type="number"
+      id="form5Example2"
+      class="form-control"
+      formControlName="amount"
+      [(ngModel)]="recurr.amount"
+    />
+    <label class="form-label" for="form5Example2">Amount</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (recurrcingForm.controls['amount'].touched &&
+          recurrcingForm.controls['amount'].invalid) ||
+        recurrcingForm.controls['amount'].dirty
+      "
+    >
+      <small *ngIf="recurrcingForm.controls['amount'].errors?.['required']"
+        >This is Required</small
+      >
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+    <select
+      class="form-select"
+      id="inlineFormSelectPref"
+      formControlName="type"
+      [(ngModel)]="recurr.optionType"
+    >
+      <option value="daily">Daily</option>
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+    </select>
+
+    <div
+      class="text-danger"
+      *ngIf="
+        (recurrcingForm.controls['type'].touched &&
+          recurrcingForm.controls['type'].invalid) ||
+        recurrcingForm.controls['type'].dirty
+      "
+    >
+      <small *ngIf="recurrcingForm.controls['type'].errors?.['required']"
+        >This is Required</small
+      >
+    </div>
+  </div>
+
+  <div data-mdb-input-init class="form-outline mb-4">
+    <input
+      type="text"
+      id="form5Example2"
+      class="form-control"
+      formControlName="description"
+      [(ngModel)]="recurr.description"
+    />
+    <label class="form-label" for="form5Example2">Description</label>
+    <div
+      class="text-danger"
+      *ngIf="
+        (recurrcingForm.controls['description'].touched &&
+          recurrcingForm.controls['description'].invalid) ||
+        recurrcingForm.controls['description'].dirty
+      "
+    >
+      <small *ngIf="recurrcingForm.controls['description'].errors?.['required']"
+        >This is Required</small
+      >
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <button
+    data-mdb-ripple-init
+    type="button"
+    class="btn btn-primary btn-block mb-4"
+    (click)="addRecurr()"
+  >
+    Add
+  </button>
+</form>
