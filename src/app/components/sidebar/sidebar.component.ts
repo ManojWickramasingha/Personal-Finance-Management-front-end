@@ -14,11 +14,6 @@ export class SidebarComponent {
 
   navbar: any = [
     {
-      routerLink: '/home',
-      label: 'Home',
-      icon: 'bi me-2 bi-house fs-3',
-    },
-    {
       routerLink: '/dashboard',
       label: 'Dashboard',
       icon: 'bi me-2 bi-speedometer2 fs-3',
@@ -53,22 +48,6 @@ export class SidebarComponent {
       label: 'Goal',
       icon: 'bi me-2 bi-bullseye fs-3',
     },
-    {
-      routerLink: '/tag',
-      label: 'Tags',
-      icon: 'bi me-2 bi-tags fs-3',
-    },
-    {
-      routerLink: '/calender',
-      label: 'Calender',
-      icon: 'bi me-2 bi-calendar fs-3',
-    },
-    {
-      routerLink: '/reminder',
-      label: 'Reminder',
-      icon: 'bi me-2 bi-alarm fs-3',
-    },
-    {},
   ];
 
   isCollapsed: any = false;

@@ -18,9 +18,11 @@ import Swal from 'sweetalert2';
   styleUrl: './income-card.component.css',
 })
 export class IncomeCardComponent implements OnInit {
+  public total: any;
   public incomeTotal: any;
-  public incomeGoal: any = 1000000;
+  public incomeGoal: any;
   public incomeForm: FormGroup;
+  public isDisabled = true;
   constructor(private http: HttpClient) {
     this.incomeForm = new FormGroup({
       total: new FormControl('', Validators.required),
@@ -36,16 +38,17 @@ export class IncomeCardComponent implements OnInit {
     updateDate: '',
   };
   ngOnInit(): void {
-    this.getTotal();
+    this.incomeForm.controls['total'].disable();
     this.getLastIncomGoal();
+    this.getTotal();
   }
 
   get incomeProgress(): number {
-    return (
-      Math.round(
-        Math.min((this.incomeTotal / this.incomeGoal) * 100, 100) * 100
-      ) / 100
-    );
+    if (!this.incomeTotal || !this.incomeGoal || this.incomeGoal === 0) {
+      return 0;
+    }
+    const progress = (this.incomeTotal / this.incomeGoal) * 100;
+    return Math.round(Math.min(progress, 100));
   }
 
   getTotal() {
@@ -53,6 +56,7 @@ export class IncomeCardComponent implements OnInit {
       .get('http://localhost:8080/analysis/income/total')
       .subscribe((data) => {
         this.incomeTotal = data;
+        this.total = data;
       });
   }
 
@@ -76,6 +80,7 @@ export class IncomeCardComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500,
           });
+          this.getLastIncomGoal();
         },
         (error) => {
           Swal.fire({

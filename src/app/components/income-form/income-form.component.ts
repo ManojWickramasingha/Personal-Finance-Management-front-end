@@ -73,5 +73,15 @@ export class IncomeFormComponent {
         });
       }
     );
+    this.clearInput();
+  }
+
+  clearInput() {
+    this.income.amount = '';
+    this.income.createDate = '';
+    this.income.description = '';
+    this.income.category = '';
+    this.income.paymentMethod = '';
+    this.income.receipt = '';
   }
 }

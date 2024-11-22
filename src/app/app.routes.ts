@@ -14,6 +14,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { SingUpFormComponent } from './components/sing-up-form/sing-up-form.component';
 import { AuthGuard } from './auth.guard';
+import { ComReportComponent } from './components/com-report/com-report.component';
+import { WeeklyReportComponent } from './components/weekly-report/weekly-report.component';
 export const routes: Routes = [
   {
     path: '',
@@ -31,13 +33,16 @@ export const routes: Routes = [
     component: DashboardComponent,
   },
   { path: 'transaction', component: TransactionComponent },
-  { path: 'home', component: HomeComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: 'budget', component: BudgetsComponent },
-  { path: 'report', component: ReportComponent },
+  {
+    path: 'report',
+    component: ReportComponent,
+    children: [
+      { path: '', component: ComReportComponent },
+      { path: 'weekly', component: WeeklyReportComponent },
+    ],
+  },
   { path: 'recurring', component: RecurringExpenseComponent },
   { path: 'goal', component: GoalComponent },
-  { path: 'tag', component: TagsComponent },
-  { path: 'calender', component: CalenderComponent },
-  { path: 'reminder', component: RemindersComponent },
 ];

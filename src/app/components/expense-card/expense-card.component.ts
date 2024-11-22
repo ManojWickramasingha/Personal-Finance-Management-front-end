@@ -19,6 +19,7 @@ import Swal from 'sweetalert2';
 })
 export class ExpenseCardComponent implements OnInit {
   today = new Date().toISOString().split('T')[0];
+
   expenseTotal: any = '';
   expenseGoal: FormGroup;
   totalGoal: any = 100000000;
@@ -37,6 +38,7 @@ export class ExpenseCardComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    this.expenseGoal.controls['total'].disable();
     this.getLast();
     this.getTotal();
   }

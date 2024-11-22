@@ -1,57 +1,22 @@
-body {
-  background-color: #f8f9fa;
+.navbar {
+  background-color: #1e1e2f; /* Dark background */
+  border-bottom: 2px solid #4caf50; /* Green accent border */
+  padding: 0.75rem 1rem; /* Adjust padding */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
-.header {
-  background-color: #28a745;
+.btn-outline-success {
+  color: #4caf50;
+  border-color: #4caf50;
+}
+.btn-outline-success:hover {
+  background-color: #4caf50;
   color: white;
-  padding: 20px;
-  text-align: center;
-  border-radius: 5px;
 }
-.metric-card {
-  background-color: #e9f7ec;
-  border: 1px solid #c3e6cb;
-  padding: 15px;
-  text-align: center;
-  border-radius: 5px;
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
 }
-.chart-container {
-  padding: 20px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #e9ecef;
-  border-radius: 5px;
-  margin-top: 20px;
-}
-
-.shadow-lg {
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.text-primary {
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.bg-white {
-  background-color: #ffffff;
-}
-
-.p-4 {
-  padding: 1.5rem !important;
-}
-
-.rounded {
-  border-radius: 8px;
-}
-
-h5 {
-  font-size: 1.25rem;
-  color: #007bff;
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
 }
